@@ -9,7 +9,9 @@ const productsSchema = new mongoose.Schema ({
     name: { type: String, required: true },
     image: { type: String, required: true },
     description: { type: String, required: true },
-    variants: [variantSchema]
+    variants: [variantSchema],
+    category: { type: String, required: true }, 
+    subcategory: { type: String, required: true }, 
     },
     { timestamps: true }
 );
