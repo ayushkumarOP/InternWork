@@ -56,4 +56,26 @@ router.post('/addProduct', upload.single('myfile'), async (req, res) => {
     }
 });
 
+
+router.get('/productsByCategory', async (req, res) => {
+    const { categories } = req.query;
+    const categoriesArray = categories.split(',');
+    try {
+        const products = await Product.find({ category: { $in: categoriesArray } });
+        res.json(products);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "An error occurred while fetching products" });
+    }
+});
+
+router.get("/find/:id", async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.id);
+      res.status(200).json(product);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
 module.exports = router;
