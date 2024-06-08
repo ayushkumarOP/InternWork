@@ -70,6 +70,7 @@ router.get('/productsByCategory', async (req, res) => {
     }
 });
 
+
 router.get("/find/:id", async (req, res) => {
     try {
       const product = await Product.findById(req.params.id);
