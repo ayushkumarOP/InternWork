@@ -24,7 +24,7 @@ const upload = multer({ storage: storage });
 
 router.post('/addProduct', upload.single('myfile'), async (req, res) => {
     try {
-        const { name, description, variants, category, subcategory } = req.body;
+        const { name, description, variants, category, subcategory, price } = req.body;
 
         if (!req.file) {
             return res.status(400).json({ error: 'No file was uploaded' });
@@ -39,7 +39,8 @@ router.post('/addProduct', upload.single('myfile'), async (req, res) => {
             description: description,
             variants: parsedVariants,
             category: category,
-            subcategory: subcategory
+            subcategory: subcategory,
+            price: price 
         });
 
         await newProduct.save();

@@ -48,6 +48,8 @@ router.get('/subcategories', async (req, res) => {
 });
 
 router.post('/addCategory', upload.single('categoryImage'), async (req, res) => {
+  console.log('Request Body:', req.body); // Debugging: Check request body
+  console.log('File:', req.file); // Debugging: Check uploaded file
   try {
     const { categoryName, subcategories } = req.body;
 
@@ -55,12 +57,16 @@ router.post('/addCategory', upload.single('categoryImage'), async (req, res) => 
       return res.status(400).json({ error: 'No file was uploaded' });
     }
 
+    const decodedCategoryName = decodeURIComponent(categoryName);
     const uploadResult = await cloudinary.uploader.upload(req.file.path);
+
+    // Parse and decode subcategories JSON string to an array
+    const parsedSubcategories = JSON.parse(subcategories).map(subcategory => decodeURIComponent(subcategory));
 
     const newCategory = new Category({
       categoryName: categoryName,
       categoryImage: uploadResult.secure_url,
-      subcategories: JSON.parse(subcategories), 
+      subcategories: parsedSubcategories, 
     });
 
     await newCategory.save();

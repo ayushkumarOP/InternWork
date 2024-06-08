@@ -12,6 +12,7 @@ const productsSchema = new mongoose.Schema ({
     variants: [variantSchema],
     category: { type: String, required: true }, 
     subcategory: { type: String, required: true }, 
+    price: { type: Number, required: true },
     },
     { timestamps: true }
 );
